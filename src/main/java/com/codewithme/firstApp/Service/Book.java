@@ -5,12 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @Data
 @Builder
 public class Book {
 
-    private String bookId;
+    private UUID bookId;
     private String bookName;
     private String bookAuthor;
     private double bookPrice;
