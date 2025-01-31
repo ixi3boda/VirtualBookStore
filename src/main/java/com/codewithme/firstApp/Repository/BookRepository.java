@@ -1,0 +1,29 @@
+package com.codewithme.firstApp.Repository;
+
+
+import com.codewithme.firstApp.Model.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+
+@Repository
+public interface BookRepository extends JpaRepository<Book, String> {
+
+    // Custom query methods
+
+    // Find books by genre
+    List<Book> findByBookGenre(String bookGenre);
+
+    // Find books with a rating greater than or equal to a certain value
+    List<Book> findByBookRatingGreaterThanEqual(double bookRating);
+
+    // Find books containing a specific keyword in the name
+    List<Book> findByBookNameContainingIgnoreCase(String keyword);
+
+    // Find books by author
+    List<Book> findByBookAuthor(String bookAuthor);
+
+}
+
