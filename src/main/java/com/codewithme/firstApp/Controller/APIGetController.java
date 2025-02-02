@@ -2,6 +2,7 @@ package com.codewithme.firstApp.Controller;
 
 import com.codewithme.firstApp.Model.Book;
 import com.codewithme.firstApp.Service.BookService;
+import com.codewithme.firstApp.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,28 +12,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
+
 
 @RestController
 public class APIGetController {
 
-
-    private BookService bookService;
-
     @Autowired
-    public APIGetController(BookService bookService) {
-        this.bookService = bookService;
-    }
+    private BookService bookService;
+    @Autowired
+    private UserService userService;
 
-    @GetMapping("/Book")
-    public Book getBook(@RequestParam String bookId){
-        return bookService.getBookById(bookId);
+
+    @GetMapping("/getBook")
+    public ResponseEntity <Book> getBookById(@RequestParam Long bookId){
+        return new ResponseEntity<>(bookService.getBookById(bookId),HttpStatus.OK);
     }
 
     @GetMapping("/Books")
-    public ResponseEntity <List<Book>> getBooks(){
+    public ResponseEntity <List<Book>> getAllBooks(){
         return new ResponseEntity<>(bookService.getBooks(), HttpStatus.OK);
     }
+
+    @GetMapping("/suggestions")
+    public ResponseEntity <List<Book>> getBookSuggestionsByName(String bookName){
+        return new ResponseEntity<>(bookService.getBookSuggestions(bookName), HttpStatus.OK);
+    }
+
+
+
 
 
 }

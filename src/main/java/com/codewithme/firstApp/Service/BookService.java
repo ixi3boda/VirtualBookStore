@@ -1,14 +1,13 @@
 package com.codewithme.firstApp.Service;
 
+import com.codewithme.firstApp.DTO.BookDTO;
 import com.codewithme.firstApp.Mapper.BookMapper;
 import com.codewithme.firstApp.Model.Book;
 import com.codewithme.firstApp.Repository.BookRepository;
 import com.codewithme.firstApp.Repository.UserRepository;
-import com.codewithme.firstApp.Request.BookRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,15 +19,13 @@ public class BookService {
     @Autowired
     private UserRepository userRepository;
 
-  //  @Autowired
-  //  private User currentUser;
 
     public Book getBookById(String bookId){
         return bookRepository.findById(bookId).get();
     }
 
-    public Book saveBook(BookRequest book){
-        Book bookk = BookMapper.mapBookReqToBook(book);
+    public Book saveBook(BookDTO book){
+        Book bookk = BookMapper.mapBookDTOToBook(book);
         bookRepository.save(bookk);
         return bookk;
     }
@@ -37,37 +34,29 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-
- /*   public boolean deleteBook(String bookId){
-        for(User user: userRepository.findAll()){
-            if(user.getUserId().equals(currentUser.getUserId())  && user.getUserRole().equals("user")){
-                return false;
-            }
-        }
-        for(Book book: bookRepository.findAll()){
-            if(book.getBookId().equals(bookId)){
-                bookRepository.findAll().remove(book);
-            }
-        }
-        return true;
+    public Book getBookById(long bookId){
+        return bookRepository.findByBookId(bookId);
     }
 
-    public ArrayList <Book> suggestBooks(){
-        ArrayList <Book> suggestedBooks = new ArrayList <>();
-        return suggestedBooks;
+    public List <Book> getBookSuggestions(String bookName){
+       return bookRepository.findByBookName(bookName);
     }
 
-    public ArrayList <Book> searchForBooks(String bookName){
-        ArrayList<Book> searchedBooks = new ArrayList <>();
-        for(Book book: bookRepository.findAll()){
-            if(book.getBookName().equals(bookName)){
-                searchedBooks.add(book);
-            }
-        }
-        return searchedBooks;
+    public Book deleteBookById(long bookId){
+        Book book = bookRepository.findByBookId(bookId);
+        if(book == null) return null;
+        bookRepository.delete(book);
+        return book;
     }
 
- */
+    public Book updateBookName(Long bookId,String newBookName){
+        Book book = bookRepository.findByBookId(bookId);
+        if(book == null) return null;
+        book.setBookName(newBookName);
+        return book;
+    }
+
+
 
 
 

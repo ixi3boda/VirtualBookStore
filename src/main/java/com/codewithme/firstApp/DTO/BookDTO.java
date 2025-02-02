@@ -1,4 +1,4 @@
-package com.codewithme.firstApp.Request;
+package com.codewithme.firstApp.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
@@ -8,10 +8,10 @@ import lombok.Data;
 
 @Data
 @Builder
-public class BookRequest {
+public class BookDTO {
 
     @JsonProperty("bookId")
-    private String bookId;
+    private Long bookId;
 
     @JsonProperty("bookName")
     private String bookName;

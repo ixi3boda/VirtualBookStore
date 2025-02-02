@@ -1,5 +1,7 @@
 package com.codewithme.firstApp.Service;
 
+import com.codewithme.firstApp.DTO.UserDTO;
+import com.codewithme.firstApp.Mapper.UserMapper;
 import com.codewithme.firstApp.Model.Book;
 import com.codewithme.firstApp.Model.User;
 import com.codewithme.firstApp.Repository.BookRepository;
@@ -15,6 +17,19 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private BookRepository bookRepository;
+
+    public User saveUser(UserDTO userDTO){
+        User user = UserMapper.mapUserDTOToUser(userDTO);
+        userRepository.save(user);
+        return user;
+    }
+
+    public User deleteUserByUserId(Long userId){
+        User user = userRepository.findUserById(userId);
+        if(user == null) return null;
+        userRepository.delete(user);
+        return user;
+    }
 
  /*   @Autowired
     private CurrentUser currentUser;

@@ -15,12 +15,8 @@ import lombok.NoArgsConstructor;
 public class Book {
 
     @Id
-    private String bookId;
-
-    @PrePersist
-    public void generateId() {
-        this.bookId = java.util.UUID.randomUUID().toString();
-    }
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bookId;
 
     @Column(nullable = false)
     private String bookName;

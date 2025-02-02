@@ -1,8 +1,11 @@
 package com.codewithme.firstApp.Controller;
 
+import com.codewithme.firstApp.DTO.BookDTO;
+import com.codewithme.firstApp.DTO.UserDTO;
 import com.codewithme.firstApp.Model.Book;
-import com.codewithme.firstApp.Request.BookRequest;
+import com.codewithme.firstApp.Model.User;
 import com.codewithme.firstApp.Service.BookService;
+import com.codewithme.firstApp.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,23 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/addBook")
 public class APIPostController {
 
-
-    private BookService bookService;
-
     @Autowired
-    public APIPostController(BookService bookService){
-        this.bookService = bookService;
-    }
+    private BookService bookService;
+    @Autowired
+    private UserService userService;
 
-    @PostMapping
-    public ResponseEntity <Book> addBook(@RequestBody BookRequest book){
+    @PostMapping("/addBook")
+    public ResponseEntity <Book> addBook(@RequestBody BookDTO book){
         Book savedBook = bookService.saveBook(book);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
     }
 
-    
+    @PostMapping("/addUser")
+    public ResponseEntity <User> addUser(@RequestBody UserDTO user){
+        User savedUser = userService.saveUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
+    }
+
+
+
+
 
 }

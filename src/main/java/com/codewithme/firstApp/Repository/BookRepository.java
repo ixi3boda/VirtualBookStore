@@ -14,7 +14,7 @@ public interface BookRepository extends JpaRepository<Book, String> {
     // Custom query methods
 
     // Find books by genre
-    List<Book> findByBookGenre(String bookGenre);
+    List<Book> findByBookName(String bookName);
 
     // Find books with a rating greater than or equal to a certain value
     List<Book> findByBookRatingGreaterThanEqual(double bookRating);
@@ -25,5 +25,9 @@ public interface BookRepository extends JpaRepository<Book, String> {
     // Find books by author
     List<Book> findByBookAuthor(String bookAuthor);
 
+    Book findByBookId(Long bookId);
+
+
+    Object find(long l);
 }
 

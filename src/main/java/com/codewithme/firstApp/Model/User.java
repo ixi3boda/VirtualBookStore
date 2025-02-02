@@ -1,15 +1,12 @@
   package com.codewithme.firstApp.Model;
 
-import com.codewithme.firstApp.Request.BookRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-
-@Data
+  @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,12 +15,8 @@ import java.util.ArrayList;
 public class User {
 
     @Id
-    private String userId;
-
-    @PrePersist
-    public void generateId() {
-        this.userId = java.util.UUID.randomUUID().toString();
-    }
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
 
     @Column(nullable = false)
     private String userName;

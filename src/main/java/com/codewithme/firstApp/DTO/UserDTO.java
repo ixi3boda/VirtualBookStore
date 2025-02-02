@@ -1,8 +1,7 @@
-package com.codewithme.firstApp.Request;
+package com.codewithme.firstApp.DTO;
 
 import com.codewithme.firstApp.Model.Book;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,10 +9,10 @@ import java.util.ArrayList;
 
 @Data
 @Builder
-public class UserRequest {
+public class UserDTO {
 
     @JsonProperty("userId")
-    private String userId;
+    private Long userId;
 
     @JsonProperty("userName")
     private String userName;
