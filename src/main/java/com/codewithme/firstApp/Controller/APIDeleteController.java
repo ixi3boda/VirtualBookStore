@@ -17,7 +17,7 @@ public class APIDeleteController {
     private BookService bookService;
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity <String> deleteUser(@PathVariable long userId){
+    public ResponseEntity <String> deleteUser(@PathVariable Long userId){
         if(userService.deleteUserByUserId(userId) != null){
             return ResponseEntity.ok("User with ID " + userId + " has been deleted.");
         }
@@ -25,7 +25,7 @@ public class APIDeleteController {
     }
 
     @DeleteMapping("/{bookId}")
-    public ResponseEntity <String> deleteBook(@PathVariable long bookId){
+    public ResponseEntity <String> deleteBook(@PathVariable Long bookId){
        if(bookService.deleteBookById(bookId) != null){
            return ResponseEntity.ok("Book with ID " + bookId + " has been deleted.");
        }

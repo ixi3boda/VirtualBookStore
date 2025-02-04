@@ -9,12 +9,12 @@ import java.util.List;
 
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, String> {
+public interface BookRepository extends JpaRepository<Book, Long> {
 
     // Custom query methods
 
     // Find books by genre
-    List<Book> findByBookName(String bookName);
+    List <Book> findByBookName(String bookName);
 
     // Find books with a rating greater than or equal to a certain value
     List<Book> findByBookRatingGreaterThanEqual(double bookRating);
@@ -27,7 +27,5 @@ public interface BookRepository extends JpaRepository<Book, String> {
 
     Book findByBookId(Long bookId);
 
-
-    Object find(long l);
 }
 

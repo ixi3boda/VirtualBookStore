@@ -25,7 +25,7 @@ public class UserService {
     }
 
     public User deleteUserByUserId(Long userId){
-        User user = userRepository.findUserById(userId);
+        User user = userRepository.findByUserId(userId);
         if(user == null) return null;
         userRepository.delete(user);
         return user;

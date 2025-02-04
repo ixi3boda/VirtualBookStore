@@ -20,7 +20,7 @@ public class BookService {
     private UserRepository userRepository;
 
 
-    public Book getBookById(String bookId){
+    public Book getBookById(Long bookId){
         return bookRepository.findById(bookId).get();
     }
 
@@ -34,9 +34,6 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Book getBookById(long bookId){
-        return bookRepository.findByBookId(bookId);
-    }
 
     public List <Book> getBookSuggestions(String bookName){
        return bookRepository.findByBookName(bookName);

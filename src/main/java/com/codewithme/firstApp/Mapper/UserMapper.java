@@ -1,8 +1,6 @@
 package com.codewithme.firstApp.Mapper;
 
-import com.codewithme.firstApp.DTO.BookDTO;
 import com.codewithme.firstApp.DTO.UserDTO;
-import com.codewithme.firstApp.Model.Book;
 import com.codewithme.firstApp.Model.User;
 import lombok.Data;
 

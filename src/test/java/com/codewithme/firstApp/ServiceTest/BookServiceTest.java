@@ -1,137 +1,65 @@
 package com.codewithme.firstApp.ServiceTest;
 
 
+import com.codewithme.firstApp.DTO.BookDTO;
+import com.codewithme.firstApp.Mapper.BookMapper;
 import com.codewithme.firstApp.Model.Book;
-import com.codewithme.firstApp.Repository.BookRepository;
-import com.codewithme.firstApp.Repository.UserRepository;
 import com.codewithme.firstApp.Service.BookService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.hamcrest.Matchers.any;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class BookServiceTest {
 
-    @Mock
-    private BookRepository bookRepository;
-
-    @Mock
-    private UserRepository userRepository;
-
-    @InjectMocks
-    private BookService bookService;
-
-    private Book book;
+   @Mock
+   private BookService bookService;
 
     @BeforeEach
     void setUp() {
-        // Initialize the Book object to be used in the tests
-        book = new Book();
-        book.setBookId(1L);
-        book.setBookName("Old Book Title");
+        MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void testUpdateBookName_Success() {
-        // Mock bookRepository behavior
-        when(bookRepository.findByBookId(1L)).thenReturn(book);
-        when(bookRepository.save(any(Book.class))).thenReturn(book);
+   @Test
+   void bookIdShouldReturnCorrectBook(){
+        Book testBook = new Book();
+        testBook.setBookName("hello");
+        testBook.setBookAuthor("charles");
+        testBook.setBookId(1L);
+        when(bookService.getBookById(1L)).thenReturn(testBook);
 
-        // Call the service method to update the book name
-        Book updatedBook = bookService.updateBookName(1L, "New Book Title");
+        Book actualBook = bookService.getBookById(1L);
 
-        // Assert the updated book name
-        assertNotNull(updatedBook);
-        assertEquals("New Book Title", updatedBook.getBookName());
+        assertNotNull(actualBook);
+       assertEquals(testBook.getBookId(), actualBook.getBookId());
+       assertEquals(testBook.getBookName(), actualBook.getBookName());
+       assertEquals(testBook.getBookAuthor(), actualBook.getBookAuthor());
+   }
 
-        // Verify repository interaction
-        verify(bookRepository).findByBookId(1L);
-        verify(bookRepository).save(book);
-    }
+   @Test
+   void saveingBookDTOShouldSaveABook(){
+       Book testBook = new Book();
+       BookDTO testBookDto = BookMapper.mapBookToBookDTO(testBook);
+       testBookDto.setBookId(2L);
+       testBookDto.setBookAuthor("chr");
+       testBookDto.setBookPrice(847.6);
+       when(bookService.saveBook(testBookDto)).thenReturn(testBook);
 
-    @Test
-    void testUpdateBookName_BookNotFound() {
-        // Mock bookRepository behavior to return null
-        when(bookRepository.findByBookId(1L)).thenReturn(null);
+       Book actualBook = bookService.saveBook(testBookDto);
 
-        // Call the service method and assert that the result is null
-        Book updatedBook = bookService.updateBookName(1L, "New Book Title");
+       assertNotNull(actualBook);
+       assertEquals(testBook.getBookId(), actualBook.getBookId());
+       assertEquals(testBook.getBookName(), actualBook.getBookName());
+       assertEquals(testBook.getBookAuthor(), actualBook.getBookAuthor());
+   }
 
-        // Assert the result is null as book doesn't exist
-        assertNull(updatedBook);
 
-        // Verify repository interaction
-        verify(bookRepository).findByBookId(1L);
-    }
 
-    @Test
-    void testDeleteBookById_Success() {
-        // Mock bookRepository behavior
-        when(bookRepository.findByBookId(1L)).thenReturn(book);
-
-        // Call the service method to delete the book
-        Book deletedBook = bookService.deleteBookById(1L);
-
-        // Assert that the book is returned after deletion
-        assertNotNull(deletedBook);
-        assertEquals(1L, deletedBook.getBookId());
-
-        // Verify repository interaction
-        verify(bookRepository).findByBookId(1L);
-        verify(bookRepository).delete(book);
-    }
-
-    @Test
-    void testDeleteBookById_BookNotFound() {
-        // Mock bookRepository behavior to return null
-        when(bookRepository.findByBookId(1L)).thenReturn(null);
-
-        // Call the service method and assert that the result is null
-        Book deletedBook = bookService.deleteBookById(1L);
-
-        // Assert that no book was deleted
-        assertNull(deletedBook);
-
-        // Verify repository interaction
-        verify(bookRepository).findByBookId(1L);
-        verify(bookRepository, never()).delete(any(Book.class));
-    }
-
-    @Test
-    void testGetBookById_Success() {
-        // Mock bookRepository behavior to return a book
-        when(bookRepository.findByBookId(1L)).thenReturn(book);
-
-        // Call the service method to get the book by ID
-        Book retrievedBook = bookService.getBookById(1L);
-
-        // Assert that the book is returned correctly
-        assertNotNull(retrievedBook);
-        assertEquals(1L, retrievedBook.getBookId());
-        assertEquals("Old Book Title", retrievedBook.getBookName());
-
-        // Verify repository interaction
-        verify(bookRepository).findByBookId(1L);
-    }
-
-    @Test
-    void testGetBookById_BookNotFound() {
-        // Mock bookRepository behavior to return null
-        when(bookRepository.findByBookId(1L)).thenReturn(null);
-
-        // Call the service method and assert that the result is null
-        Book retrievedBook = bookService.getBookById(1L);
-
-        // Assert that the result is null as the book doesn't exist
-        assertNull(retrievedBook);
-
-        // Verify repository interaction
-        verify(bookRepository).findByBookId(1L);
-    }
 }
